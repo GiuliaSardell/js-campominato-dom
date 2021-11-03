@@ -109,16 +109,20 @@ function play(){
     
       console.log('ogni elemento',bombeGenerate[i])
 
+      const numeriBomba= bombeGenerate[i]
+      console.log(numeriBomba)
+
         if(bombeGenerate.includes(clickedNum)){
           console.log('questo numero fa parte dell array', clickedNum );
    
           this.classList.add('bomb');
         }
 
-        if(clickedNum === bombeGenerate[i]){
+   
+     
 
-          this.classList.add('bomb');
-        }
+          // this.classList.add('bomb');
+        
     
     }
 
