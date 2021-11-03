@@ -10,7 +10,7 @@ body{
 
 main{
   height: calc(100vh - 180px);
-  background-color: orange;
+  background-color: turquoise;
 }
 
 header, footer{
@@ -39,6 +39,7 @@ header, footer{
 
 #play{
   padding: 0 15px;
+  margin: 0 10px;
 }
 
 
@@ -59,6 +60,11 @@ header, footer{
 }
 
 .cell.clicked{
-  background-color: blue;
+  color: white;
+  background-color: cornflowerblue;
+}
 
+.cell.bomb{
+  color: white;
+  background-color: red;
 }

@@ -1,16 +1,16 @@
 const container = document.querySelector('.containerMain')
 
-const listNumber = []
+
 
 const level = document.getElementById('level')
-console.log(level)
+
 
 
 
 
 
 document.getElementById('play').addEventListener('click', function(){
-  play()
+  play();
 })
 
 
@@ -20,10 +20,16 @@ function play(){
   const gridLevels = [100,81,49];
   const cellNumbers = gridLevels[level-1];
   const cellRow = Math.sqrt(cellNumbers);
+  const BOMBS_NUMBER = 16;
+  generateBombs();
+  
 
-  console.log('numero per dividere le celle: ',cellRow)
+  
+
+  
   console.log('value selezionato: ',level)
   console.log('numero di celle ',cellNumbers)
+  console.log('numero per dividere le celle: ',cellRow)
   /*
   altro modo per selezionare il livello
   si può fare anche con if
@@ -43,6 +49,10 @@ function play(){
   document.querySelector('main').innerHTML = '';
   generatePlayGround()
 
+  // if()
+
+  
+
   function generatePlayGround(){
     const grid = document.createElement('div');
     grid.className= 'grid';
@@ -55,14 +65,76 @@ function play(){
       cell.style.height = cellSize;
 
 
-      grid.append(cell)
+      
+    
       
       document.querySelector('main').append(grid)
 
+      // const cell = document.querySelector('cell')
+        
+        cell.addEventListener('click', handleClickCell)
+
+      grid.append(cell)
     }
 
+  }
+  
+  
+
+  if(bombs.includes(clickedNum)){
+    cell.classList.remove('clicked')
+    cell.classList.add('bomb')
+  }
+
+
+
+
+  function handleClickCell(event){
+    this.classList.add('clicked');
+    console.log('il numero è ',event.target.innerText);
+
+    const clickedNum = event.target.innerText
+    console.log('clickedNum',clickedNum)
+
+    
+
+    return clickedNum
 
   }
 
+  function generateBombs(){
+    const bombs = []
+    //creo le bombe
+    console.log('BOMBS_NUMBER',BOMBS_NUMBER)
+
+    while(bombs.length < BOMBS_NUMBER){
+
+      const bomb = getRandomInt(1, cellNumbers);
+
+      if (!bombs.includes(bomb)) bombs.push(bomb);
+
+      
+    }
+
+    //restituisco l'arrey pieno
+    console.log('bombs arrey',bombs)
+    return bombs;
+    
+  }
+
+
+
+
+
+    
+
+
+
+ 
+
 }
 
+ function getRandomInt (min, max){
+    return Math.floor(Math.random() * (max - min + 1) + min);
+  }
+  
