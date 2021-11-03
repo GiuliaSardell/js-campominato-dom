@@ -21,8 +21,13 @@ function play(){
   const cellNumbers = gridLevels[level-1];
   const cellRow = Math.sqrt(cellNumbers);
   const BOMBS_NUMBER = 16;
-  generateBombs();
-  
+  const bombeGenerate = generateBombs();
+
+
+
+
+
+
 
   
 
@@ -70,37 +75,62 @@ function play(){
       
       document.querySelector('main').append(grid)
 
-      // const cell = document.querySelector('cell')
         
-        cell.addEventListener('click', handleClickCell)
+      cell.addEventListener('click', handleClickCell)
 
       grid.append(cell)
+
+      
     }
 
-  }
-  
   
 
-  if(bombs.includes(clickedNum)){
-    cell.classList.remove('clicked')
-    cell.classList.add('bomb')
+    
   }
 
-
+ 
+  
 
 
   function handleClickCell(event){
     this.classList.add('clicked');
     console.log('il numero è ',event.target.innerText);
 
-    const clickedNum = event.target.innerText
-    console.log('clickedNum',clickedNum)
+    const clickedNum = parseInt(event.target.innerText);
+    console.log('clickedNum',clickedNum);
 
+    console.log('le bombe esistono?', bombeGenerate);
+    
+  
+
+    // al verifica va fatta qua
+    for (let i =0; i< bombeGenerate.length ; i++){
+      // console.log('elementi array',bombeGenerate[i])
+    
+      console.log('ogni elemento',bombeGenerate[i])
+
+        if(bombeGenerate.includes(clickedNum)){
+          console.log('questo numero fa parte dell array', clickedNum );
+   
+          this.classList.add('bomb');
+        }
+
+        if(clickedNum === bombeGenerate[i]){
+
+          this.classList.add('bomb');
+        }
+    
+    }
+
+
+  
     
 
-    return clickedNum
-
   }
+
+  
+  
+
 
   function generateBombs(){
     const bombs = []
@@ -121,7 +151,6 @@ function play(){
     return bombs;
     
   }
-
 
 
 
