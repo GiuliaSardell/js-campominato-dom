@@ -23,6 +23,12 @@ function play(){
   const BOMBS_NUMBER = 16;
   const bombeGenerate = generateBombs();
 
+  let attempts = 0;
+  const attemptsList = [];
+
+  const MAX_ATTEMPTS = cellNumbers - BOMBS_NUMBER
+
+
 
 
 
@@ -93,41 +99,84 @@ function play(){
 
 
   function handleClickCell(event){
-    this.classList.add('clicked');
-    console.log('il numero è ',event.target.innerText);
+    // this.classList.add('clicked');
+    // console.log('il numero è ',event.target.innerText);
 
     const clickedNum = parseInt(event.target.innerText);
     console.log('clickedNum',clickedNum);
 
-    console.log('le bombe esistono?', bombeGenerate);
+    // console.log('le bombe esistono?', bombeGenerate);
     
   
 
     // al verifica va fatta qua
-    for (let i =0; i< bombeGenerate.length ; i++){
-      // console.log('elementi array',bombeGenerate[i])
     
-      console.log('ogni elemento',bombeGenerate[i])
 
-      const numeriBomba= bombeGenerate[i]
-      console.log(numeriBomba)
 
-        if(bombeGenerate.includes(clickedNum)){
-          console.log('questo numero fa parte dell array', clickedNum );
-   
-          this.classList.add('bomb');
-        }
+  if(bombeGenerate.includes(clickedNum)){
 
-   
-     
+    endGame();
 
-          // this.classList.add('bomb');
-        
-    
+  } else {
+    //verifico se il tentativo non è già stato fatto
+    // se non è presente 
+    if(!attemptsList.includes(clickedNum)){
+      //incremento il numero dei tenttivi
+      attempts++;
+      // aggiungo il numero nell'elenco
+      attemptsList.push(clickedNum);
+      //coloro la cella di azzurro
+      this.classList.add('clicked');
+
+      //verifico se ho completato le celle
+      if(attemptsList === MAX_ATTEMPTS){
+        //hai vinto
+        endGame();
+      }
     }
 
+    
+  }
+    
 
-  
+  }
+
+  function endGame(){
+    /* 
+    1. far colorare tutte le bombe
+    2. 'congelare' il gioco
+    3. generare un messaggio di output diverso se vinci o perdi
+    */
+
+    //prendo tutte le celle -> se sono bombe coloro di rosso
+    const cells = document.getElementsByClassName('cell')
+    for (let i = 0; i < cells.length; i++){
+      // se l'indice della cella è incluso nelle bombe
+      if(bombeGenerate.includes(i + 1)){
+        cells[i].classList.add('bomb');
+      }
+
+      //elimino la possibilità di cliccare ancora (tolgo l'eventListener)
+      cells[i].removeEventListener('click', handleClickCell);
+      //altro metodo (neutralizzo il click)
+      //cells[i].style.pointerEvents = 'none';
+
+    }
+
+    //messaggio di output
+    let msg  = '';
+    // se ho vinto
+    if(attemptsList === MAX_ATTEMPTS){
+      msg = 'Complimenti! Hai vinto!!'
+    }else {
+      // ho perso
+      msg = `Hai perso! :-( Hai fatto ${attempts} tentativi`;
+    }
+
+    const output = document.createElement('div');
+    output.innerHTML = `<h5>${msg}</h5>`
+    document.querySelector('main').append(output);
+
     
 
   }
